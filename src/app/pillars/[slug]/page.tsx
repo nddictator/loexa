@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
+import { PillarInquiryTrigger } from "@/components/sections/PillarInquiryTrigger";
 import { pillars, getPillarBySlug } from "@/data/pillars";
 
 export function generateStaticParams() {
@@ -128,14 +129,7 @@ export default async function PillarDetailPage(props: PageProps<"/pillars/[slug]
             )}
 
             {detail.cta && (
-              <Link
-                href={detail.cta.href}
-                className="mt-10 inline-flex items-center gap-2 rounded-full px-6 py-3 font-heading text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition-transform hover:scale-[1.03]"
-                style={{ background: theme.accent }}
-              >
-                {detail.cta.label}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <PillarInquiryTrigger pillarTitle={pillar.title} ctaLabel={detail.cta.label} theme={theme} />
             )}
           </Reveal>
 

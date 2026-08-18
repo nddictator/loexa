@@ -1,6 +1,5 @@
 "use client";
 
-import { Fragment } from "react";
 import { motion } from "framer-motion";
 import { Landmark, GraduationCap, Lightbulb, UserCog, Globe, type LucideIcon } from "lucide-react";
 import { EASE_OUT } from "@/components/motion/Reveal";
@@ -20,6 +19,12 @@ const R_INNER = 17;
 const GAP_DEG = 3;
 const STEP_DELAY = 0.1;
 const BASE_DELAY = 0.25;
+// Icon size lives in the same 0–100 viewBox units as the wedges, so it
+// scales exactly in lockstep with the ring at every viewport width — unlike
+// a fixed-pixel icon positioned with a percentage offset, it can never end
+// up wider than the (now-thinner) wedge band and spill onto the white page
+// background on narrow screens.
+const ICON_SIZE = 6.5;
 
 function polarToCartesian(r: number, angleDeg: number) {
   const angleRad = (angleDeg * Math.PI) / 180;
@@ -79,6 +84,26 @@ export function CollaborativeApproachDiagram({ categories }: { categories: strin
           );
         })}
         <circle cx="50" cy="50" r={R_INNER - 1} fill="white" />
+
+        {categories.map((title, i) => {
+          const { mid } = wedgeAngles(i, count);
+          const iconPos = polarToCartesian((R_OUTER + R_INNER) / 2, mid);
+          const Icon = SEGMENTS[i % SEGMENTS.length].icon;
+          const delay = BASE_DELAY + i * STEP_DELAY + 0.2;
+          return (
+            <motion.g
+              key={title}
+              transform={`translate(${iconPos.x - ICON_SIZE / 2} ${iconPos.y - ICON_SIZE / 2})`}
+              style={{ transformBox: "fill-box", transformOrigin: "50% 50%" } as React.CSSProperties}
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={viewport}
+              transition={{ duration: 0.4, delay, ease: EASE_OUT }}
+            >
+              <Icon size={ICON_SIZE} color="white" strokeWidth={1.5} />
+            </motion.g>
+          );
+        })}
       </svg>
 
       <motion.div
@@ -100,33 +125,24 @@ export function CollaborativeApproachDiagram({ categories }: { categories: strin
 
       {categories.map((title, i) => {
         const { mid } = wedgeAngles(i, count);
-        const iconPos = polarToCartesian((R_OUTER + R_INNER) / 2, mid);
-        const labelPos = polarToCartesian(R_OUTER + 12, mid);
-        const Icon = SEGMENTS[i % SEGMENTS.length].icon;
+        // Pulled in from the ring a little (was +12) and given a narrower,
+        // wrapping box (was a fixed w-20/w-28) so the label's own footprint
+        // can't push past the diagram's box on narrow screens the way a
+        // wide fixed-pixel box anchored near the ring's left/right edge did.
+        const labelPos = polarToCartesian(R_OUTER + 9, mid);
         const delay = BASE_DELAY + i * STEP_DELAY + 0.2;
         return (
-          <Fragment key={title}>
-            <motion.div
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={viewport}
-              transition={{ duration: 0.4, delay, ease: EASE_OUT }}
-              style={{ left: `${iconPos.x}%`, top: `${iconPos.y}%` }}
-            >
-              <Icon className="h-6 w-6 text-white sm:h-8 sm:w-8" strokeWidth={1.5} />
-            </motion.div>
-            <motion.div
-              className="absolute w-20 -translate-x-1/2 -translate-y-1/2 text-center sm:w-28"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={viewport}
-              transition={{ duration: 0.4, delay, ease: EASE_OUT }}
-              style={{ left: `${labelPos.x}%`, top: `${labelPos.y}%` }}
-            >
-              <p className="font-heading text-xs font-bold leading-tight text-navy sm:text-base">{title}</p>
-            </motion.div>
-          </Fragment>
+          <motion.div
+            key={title}
+            className="absolute w-16 -translate-x-1/2 -translate-y-1/2 text-center sm:w-24"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={viewport}
+            transition={{ duration: 0.4, delay, ease: EASE_OUT }}
+            style={{ left: `${labelPos.x}%`, top: `${labelPos.y}%` }}
+          >
+            <p className="font-heading text-xs font-bold leading-tight text-navy sm:text-base">{title}</p>
+          </motion.div>
         );
       })}
     </div>

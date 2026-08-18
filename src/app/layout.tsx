@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Inter, Dancing_Script } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { NetlifyFormRegistrations } from "@/components/layout/NetlifyFormRegistrations";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import "./globals.css";
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${poppins.variable} ${inter.variable} ${dancingScript.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body bg-offwhite text-ink">
+        <NetlifyFormRegistrations />
         <MotionProvider>
           <Header />
           <main className="flex-1">{children}</main>
