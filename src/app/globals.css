@@ -26,3 +26,50 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* Thin, brand-gold scrollbar for the main page, darkens on hover. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #c9a227 transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #c9a227;
+  border-radius: 9999px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  filter: brightness(0.75);
+}
+
+/* Thin, theme-accented scrollbar for the pillar detail page's scrollable
+   content column — darkens on hover so it reads as interactive. */
+.pillar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--pillar-accent) transparent;
+}
+
+.pillar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pillar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pillar-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--pillar-accent);
+  border-radius: 9999px;
+}
+
+.pillar-scroll::-webkit-scrollbar-thumb:hover {
+  filter: brightness(0.75);
+}

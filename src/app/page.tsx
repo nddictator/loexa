@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import {
   GraduationCap,
-  Wrench,
-  Monitor,
   Landmark,
   Handshake,
   Users,
@@ -24,8 +22,7 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { PillarCard } from "@/components/ui/PillarCard";
-import { IconCircle } from "@/components/ui/IconCircle";
+import { PillarsShowcase } from "@/components/sections/PillarsShowcase";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { LoexaWaySteps } from "@/components/sections/LoexaWaySteps";
 import { FounderMessage } from "@/components/sections/FounderMessage";
@@ -37,7 +34,6 @@ import { CapabilityBands } from "@/components/sections/CapabilityBands";
 import { Button } from "@/components/ui/Button";
 import { CornerCut } from "@/components/ui/CornerCut";
 import { Reveal } from "@/components/motion/Reveal";
-import { StaggerGroup, StaggerItem } from "@/components/motion/Stagger";
 import {
   homeContent,
   homeOpportunityContent,
@@ -55,7 +51,6 @@ export const metadata: Metadata = {
   description: homeContent.hero.description,
 };
 
-const pillarIcons = [GraduationCap, Wrench, Monitor, Landmark, Handshake];
 const statIcons = [Users, TrendingUp, Building2, GraduationCap, Handshake, Network];
 const marketIcons = [GraduationCap, Landmark, Car, Factory, Pickaxe, Zap, Building2, Sprout, Truck, Banknote];
 const sharedValueTones = ["navy", "navy-light", "gold", "navy-dark"] as const;
@@ -139,18 +134,9 @@ export default function HomePage() {
           <Reveal>
             <SectionHeading heading={homeContent.pillarsHeading} align="center" />
           </Reveal>
-          <StaggerGroup className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {homeContent.pillars.map((pillar, i) => (
-              <StaggerItem key={pillar.number}>
-                <PillarCard
-                  number={pillar.number}
-                  title={pillar.title}
-                  description={pillar.description}
-                  icon={<IconCircle icon={pillarIcons[i]} tone={i === 4 ? "gold" : "navy"} size="md" />}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
+          <div className="mt-12">
+            <PillarsShowcase />
+          </div>
         </Container>
       </section>
 
