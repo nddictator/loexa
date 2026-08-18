@@ -1,0 +1,22 @@
+<html>
+  <head></head>
+  <body>
+    <!--
+      Netlify's build-time bot scans this static file to register the
+      "pillar-inquiry" form and its field names — it's never rendered to a
+      visitor. The real form (PillarInquiryForm.tsx) submits here via fetch.
+      Field names must stay in sync with PillarInquiryForm.tsx.
+    -->
+    <form name="pillar-inquiry" data-netlify="true" netlify-honeypot="botField" hidden>
+      <input type="hidden" name="form-name" value="pillar-inquiry" />
+      <input type="text" name="fullName" />
+      <input type="tel" name="contactNo" />
+      <input type="tel" name="whatsappContact" />
+      <input type="email" name="email" />
+      <input type="text" name="organization" />
+      <input type="text" name="category" />
+      <textarea name="message"></textarea>
+      <input type="text" name="botField" />
+    </form>
+  </body>
+</html>

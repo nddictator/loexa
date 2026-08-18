@@ -6,9 +6,9 @@ import { Loader2, Send } from "lucide-react";
 import { EASE_OUT } from "@/components/motion/Reveal";
 import { contactDetails } from "@/data/site-content";
 
-// Must match the hidden static form in layout.tsx (Netlify's build-time bot
-// scans that file, not this client component, to register the form) — same
-// name and the same field names.
+// Must match public/__forms.html — Netlify's build-time bot scans that
+// static file (the OpenNext/Netlify runtime doesn't scan React-rendered
+// output) to register the form and its field names.
 const FORM_NAME = "pillar-inquiry";
 const HONEYPOT_FIELD = "botField";
 
@@ -45,7 +45,7 @@ export function PillarInquiryForm({ pillarTitle }: { pillarTitle: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       }),
-      fetch("/", {
+      fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({ "form-name": FORM_NAME, ...values }),
