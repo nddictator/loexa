@@ -74,10 +74,9 @@ export function CollaborativeApproachDiagram({ categories }: { categories: strin
               key={title}
               d={donutSegmentPath(start, end)}
               fill={SEGMENTS[i % SEGMENTS.length].color}
-              style={{ transformBox: "view-box", transformOrigin: "50px 50px" } as React.CSSProperties}
-              initial={{ opacity: 0, scale: 0.4 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.035 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              whileHover={{ filter: "brightness(1.12)" }}
               viewport={viewport}
               transition={{ duration: 0.55, delay: BASE_DELAY + i * STEP_DELAY, ease: EASE_OUT }}
             />
@@ -94,9 +93,8 @@ export function CollaborativeApproachDiagram({ categories }: { categories: strin
             <motion.g
               key={title}
               transform={`translate(${iconPos.x - ICON_SIZE / 2} ${iconPos.y - ICON_SIZE / 2})`}
-              style={{ transformBox: "fill-box", transformOrigin: "50% 50%" } as React.CSSProperties}
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={viewport}
               transition={{ duration: 0.4, delay, ease: EASE_OUT }}
             >
